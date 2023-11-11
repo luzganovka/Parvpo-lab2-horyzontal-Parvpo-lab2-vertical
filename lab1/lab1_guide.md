@@ -125,5 +125,3 @@ Dockerfile начинается с базового образа.
 - https://habr.com/ru/companies/flant/articles/325358/
 - https://habr.com/ru/articles/663026/
 - https://habr.com/ru/articles/346634/
-- 
-
