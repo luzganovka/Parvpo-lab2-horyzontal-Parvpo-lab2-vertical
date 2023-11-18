@@ -28,16 +28,18 @@ int main() {
         sum += array[i];
     }
 
+    
+
        // Stop the timer
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
     std::chrono::duration<double, std::milli> duration = end - start;
     double elapsed_time = duration.count();
 
-    std::cout << "Sum of all numbers: " << sum << std::endl;
+    //std::cout << "Sum of all numbers: " << sum << std::endl;
     std::cout << "Elapsed time: " << elapsed_time << " milliseconds" << std::endl;
 
     // Free the dynamically allocated memory
 
-    return 0;
+    return sum;
 }
