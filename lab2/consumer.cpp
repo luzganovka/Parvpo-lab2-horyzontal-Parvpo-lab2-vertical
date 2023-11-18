@@ -84,18 +84,18 @@ int* vectorToArray(const std::vector<int>& vec) {
 std::pair<int, int> getData(const std::string& requestContent) {
     std::string buffer;
 
-    std::size_t closingCurlyBracePos = requestContent.find("{");
+    //std::size_t closingCurlyBracePos = requestContent.find("{");
 
     //std::cout << "closingCurlyBracePos: " << closingCurlyBracePos  << std::endl;
 
-    if (closingCurlyBracePos != std::string::npos) {
+    if (1) {
 
-        for (int i = closingCurlyBracePos; i < requestContent.length(); i++) {
+        for (int i = 0; i < requestContent.length(); i++) {
             buffer += requestContent[i];
         }
 
         //buffer = requestContent.substr(0, closingCurlyBracePos + 1);
-        //std::cout << buffer << " " << buffer.length() << " " << closingCurlyBracePos <<  std::endl;
+        //std::cout << buffer << " " << buffer.length() <<  std::endl;
     }
     else {
         return std::pair<int, int>(-1, -520);
@@ -105,6 +105,8 @@ std::pair<int, int> getData(const std::string& requestContent) {
 
     int messageType = json["message_type"];
     int messageContent = json["message_content"];
+
+    //std::cout << messageType << " " << messageContent << std::endl;
 
     return std::pair<int, int>(messageType, messageContent);
 }
@@ -118,26 +120,28 @@ int main() {
             // Read the HTTP request
             std::string requestContent = req.body;
 
-            std::cout << requestContent << std::endl;
+            //std::cout << requestContent << std::endl;
             
             // Check the type of producer
             auto tmp = getData(requestContent);
-            int type = tmp.first, data = tmp.second;
+            int prod_type = tmp.first, prod_data = tmp.second;
 
-            if (type == 1) {
-                if (data == -1) {
+            //std::cout << prod_type << prod_data;
+
+            if (prod_type == 1) {
+                if (prod_data == -1) {
                     got_data += 1;
                 }
                 else {
-                    matrix1_demo.push_back(data);
+                    matrix1_demo.push_back(prod_data);
                 }
             } 
-            else if (type == 2) {
-                if (data == -1) {
+            else if (prod_type == 2) {
+                if (prod_data == -1) {
                     got_data += 1;
                 }
                 else {
-                    matrix2_demo.push_back(data);
+                    matrix2_demo.push_back(prod_data);
                 }
             } 
             else {
@@ -147,10 +151,12 @@ int main() {
             }
 
             // Construct an HTTP response
-            std::string responseContent = std::to_string(data); // Placeholder for the response content
+            std::string responseContent = std::to_string(prod_data); // Placeholder for the response content
             res.code = 200;
             res.set_header("Content-Type", "text/plain");
             res.body = responseContent;
+
+            res.end();
         }
     );
 
@@ -245,6 +251,6 @@ int main() {
     //std::cout << std::endl;
     //std::cout << std::endl;
 
-    app.port(8080).run();
+    app.port(8080).multithreaded().run();
 
 }

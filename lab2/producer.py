@@ -16,10 +16,10 @@ def send_messages_to_broker(PDtype):
                 'message_content': random.randint(1, 1000),
             }
             response = requests.post(broker_url, json=data)
-            print(f"Message sent: {data.get('message_content')}, got response: {response.text}")
+            #print(f"Message sent: {data.get('message_content')}, got response: {response.text}")
             while response.text == "-520":
                 response = requests.post(broker_url, json=data)
-                print(f"Message sent: {data.get('message_content')}, got response: {response.text}")
+                #print(f"Message sent: {data.get('message_content')}, got response: {response.text}")
             else:
                 i += 1
         except requests.exceptions.RequestException as E:
