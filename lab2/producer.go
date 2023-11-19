@@ -6,15 +6,16 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
-	"time"
 	"os"
 	"strconv"
+	"time"
 )
 
 func sendMessagesToBroker(pdType int) {
 	brokerURL := "http://localhost:8080"
+	endURL := "http://localhost:8080/end"
 	i := 0
-	for i < 1024*1024 {
+	for i < 128*128 {
 		if i%1000 == 0 {
 			fmt.Printf("Sending message %d...\n", i)
 		}
@@ -56,7 +57,7 @@ func sendMessagesToBroker(pdType int) {
 	}
 
 	// Send POST request with JSON data
-	_, err = http.Post(brokerURL, "application/json", bytes.NewBuffer(jsonData))
+	_, err = http.Post(endURL, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		fmt.Printf("Error sending message: %v\n", err)
 		time.Sleep(1 * time.Second)

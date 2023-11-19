@@ -113,6 +113,7 @@ std::pair<int, int> getData(const std::string& requestContent) {
 
 int main() {
     crow::SimpleApp app;
+    crow::logger::setLogLevel(crow::LogLevel::Warning);
 
     CROW_ROUTE(app, "/")
     .methods("POST"_method)(
@@ -162,24 +163,28 @@ int main() {
 
     CROW_ROUTE(app, "/end").methods("POST"_method)(
         [&](const crow::request& req, crow::response& res) {
-            auto timer1 = std::chrono::high_resolution_clock::now();
+            got_data += 1;
 
-            if (isPerfectSquare(matrix1_demo.size()) && isPerfectSquare(matrix2_demo.size())) {
-                //std::cout << "Result: " << std::endl;
-                std::list<int> result = matrixMultiply(vectorToList(matrix1_demo), vectorToList(matrix2_demo), sqrt(matrix1_demo.size()));
-                // for (int i = 0; i < result.size(); i++) {
-                //     std::cout << result[i] << " ";
-                // }
-                //std::cout << std::endl;
+            if (got_data == 2) {
+                auto timer1 = std::chrono::high_resolution_clock::now();
+
+                if (isPerfectSquare(matrix1_demo.size()) && isPerfectSquare(matrix2_demo.size())) {
+                    //std::cout << "Result: " << std::endl;
+                    std::list<int> result = matrixMultiply(vectorToList(matrix1_demo), vectorToList(matrix2_demo), sqrt(matrix1_demo.size()));
+                    // for (int i = 0; i < result.size(); i++) {
+                    //     std::cout << result[i] << " ";
+                    // }
+                    //std::cout << std::endl;
+                }
+
+                auto timer2 = std::chrono::high_resolution_clock::now();   
+
+                std::chrono::duration<double, std::milli> duration = timer2 - timer1;
+
+                std::cout << "Time: " << duration.count() << " ms" << std::endl;
+
+                exit(0);
             }
-
-            auto timer2 = std::chrono::high_resolution_clock::now();   
-
-            std::chrono::duration<double, std::milli> duration = timer2 - timer1;
-
-            std::cout << "Time: " << duration.count() << " ms" << std::endl;
-
-            exit(0);
         }
     );
 
