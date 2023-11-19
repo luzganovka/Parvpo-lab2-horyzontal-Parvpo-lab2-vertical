@@ -14,6 +14,4 @@ RUN go build -o producer producer.go
 # Set the entry point for the container
 CMD ["cd /app"]
 
-CMD ["ls", "-l"]
-
-CMD ./producer 2 $MSize
+CMD ./producer 1 $MSize

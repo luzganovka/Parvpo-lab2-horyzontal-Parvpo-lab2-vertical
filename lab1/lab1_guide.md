@@ -80,7 +80,7 @@
 
 Про остальные флаги docker run можно почитать [ТУТ](https://docs.docker.com/engine/reference/commandline/run/).
 
-#### <div align="center"> Теперь про Dockerfile
+### <div align="center"> Теперь про Dockerfile
 
 Далеко не всегда готовый образ удовлетворяет всем требования программиста, так что часто приходится их достраивать. Именно для этого и нужен Dockerfile.
 
