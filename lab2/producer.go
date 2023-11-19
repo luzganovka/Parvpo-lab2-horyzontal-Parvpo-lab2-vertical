@@ -11,11 +11,11 @@ import (
 	"time"
 )
 
-func sendMessagesToBroker(pdType int) {
+func sendMessagesToBroker(pdType int, matrixSize int) {
 	brokerURL := "http://localhost:8080"
 	endURL := "http://localhost:8080/end"
 	i := 0
-	for i < 128*128 {
+	for i < matrixSize*matrixSize {
 		if i%1000 == 0 {
 			fmt.Printf("Sending message %d...\n", i)
 		}
@@ -65,14 +65,19 @@ func sendMessagesToBroker(pdType int) {
 }
 
 func main() {
-	if len(os.Args) > 1 {
-		arg, err := strconv.Atoi(os.Args[1])
+	if len(os.Args) > 2 {
+		arg1, err := strconv.Atoi(os.Args[1])
 		if err != nil {
 			fmt.Println("Invalid argument provided. Should be a producer type: 1 or 2")
 			return
 		}
-		sendMessagesToBroker(arg)
+		arg2, err := strconv.Atoi(os.Args[2])
+		if err != nil {
+			fmt.Println("Invalid argument provided. Should be a producer type: 1 or 2")
+			return
+		}
+		sendMessagesToBroker(arg1, arg2)
 	} else {
-		fmt.Println("No arguments provided. Should be provided producer type: 1 or 2")
+		fmt.Println("No arguments provided. Should be provided producer type: 1 or 2 and number of messages to send")
 	}
 }
