@@ -1,0 +1,10 @@
+.devcontainer/devcontainer.json
+.devcontainer/Dockerfile
+.devcontainer/reinstall-cmake.sh
+.github/dependabot.yml
+exam/task1/Dockerfile
+exam/task1/task1.py
+exam/task2/Dockerfile
+exam/task2/task2.py
+exam/task4/Dockerfile
+exam/task4/task4.py
