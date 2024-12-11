@@ -7,7 +7,7 @@
 
 std::vector<int> matrix1_demo;
 std::vector<int> matrix2_demo;
-int got_data = 0;
+int got_data = 0;   // some flag
 
 template<typename T>
 std::list<T> vectorToList(const std::vector<T>& vec) {
@@ -30,6 +30,10 @@ std::list<T> vectorToList(const std::vector<T>& vec) {
 //     return result;
 // }
 
+/*
+*   Simply multiplies two matrixes, given as two one-dimension lists.
+*   it, it1, it2 -- are iterators for result, first and second matrixes respectively.
+*/
 std::list<int> matrixMultiply(const std::list<int>& matrix1, const std::list<int>& matrix2, int size) {
     std::list<int> result(size * size, 0);
 
@@ -55,21 +59,31 @@ std::list<int> matrixMultiply(const std::list<int>& matrix1, const std::list<int
     
     return result;
 }
+
+/*
+*   Returns true if given num is a square of some numeric.
+*/
 bool isPerfectSquare(int num) {
     int squareRoot = std::sqrt(num);
     return squareRoot * squareRoot == num;
 }
 
-int handleProducerMessage(int num, std::vector<int> buf){
-    if (num == -1){
-        return 1;
-    }
-    else{
-        buf.push_back(num);
-        return 0;
-    }
-}
+/*
+*   Pushes nums into vector buf while num != -1
+*/
+// int handleProducerMessage(int num, std::vector<int> buf){
+//     if (num == -1){
+//         return 1;
+//     }
+//     else{
+//         buf.push_back(num);
+//         return 0;
+//     }
+// }
 
+/*
+*   Simply converts a vector to an array. No surprise.
+*/
 int* vectorToArray(const std::vector<int>& vec) {
     int* arr = new int[vec.size()]; // Create a new array with the same size as the vector
     
@@ -81,6 +95,9 @@ int* vectorToArray(const std::vector<int>& vec) {
     return arr; // Return the pointer to the array
 }
 
+/*
+*   Parses pseudo-json string into <int, int> <mes.type, mes.content>
+*/
 std::pair<int, int> getData(const std::string& requestContent) {
     std::string buffer;
 
@@ -129,6 +146,7 @@ int main() {
 
             //std::cout << prod_type << prod_data;
 
+            // Pushes got nums into vector matrix1(2) while num != -1
             if (prod_type == 1) {
                 if (prod_data == -1) {
                     got_data += 1;
@@ -166,15 +184,16 @@ int main() {
             got_data += 1;
 
             if (got_data == 2) {
+                // std::cout << "Hello matherfucking World!" << std::endl;
                 auto timer1 = std::chrono::high_resolution_clock::now();
 
                 if (isPerfectSquare(matrix1_demo.size()) && isPerfectSquare(matrix2_demo.size())) {
-                    //std::cout << "Result: " << std::endl;
+                    // std::cout << "Result: " << std::endl;
                     std::list<int> result = matrixMultiply(vectorToList(matrix1_demo), vectorToList(matrix2_demo), sqrt(matrix1_demo.size()));
                     // for (int i = 0; i < result.size(); i++) {
                     //     std::cout << result[i] << " ";
                     // }
-                    //std::cout << std::endl;
+                    // std::cout << std::endl;
                 }
 
                 auto timer2 = std::chrono::high_resolution_clock::now();   

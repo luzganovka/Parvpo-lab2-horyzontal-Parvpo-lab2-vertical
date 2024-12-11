@@ -1,4 +1,4 @@
-version: '3'
+#version: '3'
 
 services:
 #  nginx:
@@ -26,7 +26,8 @@ services:
       context: ./producer2
       no_cache: true
     env_file:
-      - ./MSize.env
+      - ./Mcontext: ./producer2
+      no_cache: trueSize.env
     networks:
       - lab2network
 
@@ -34,12 +35,13 @@ services:
     build:
       context: ./consumer
       no_cache: true
+      network: host
     networks:
       - lab2network
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '3'
 
 networks:
   lab2network:
